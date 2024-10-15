@@ -218,6 +218,16 @@ Export-Package: \
     com.mindfusion.pdf,\
     com.mindfusion.scripting,\
     com.mindfusion.svg,\
+    JDOMAbout$Author.class,\
+    JDOMAbout$Info.class,\
+    JDOMAbout.class,\
+    org.jdom.adapters,\
+    org.jdom,\
+    org.jdom.filter,\
+    org.jdom.input,\
+    org.jdom.output,\
+    org.jdom.transform,\
+    org.jdom.xpath,\
     org.jfree.chart,\
     org.jfree.chart.annotations,\
     org.jfree.chart.axis,\

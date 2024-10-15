@@ -41,6 +41,11 @@ dependencies {
     api(":vista") //developed by DWR. Unavailable on maven central
     api(":xml") //custom collection of sun xml packages
     api(":JDiagram")
+    api(":JDiagram")
+
+    //dlls
+    api fileTree(dir: 'libs/win-x64', include: ['cb.dll'])
+    api fileTree(dir: 'libs/win-x64', include: ['jep.dll'])
 }
 
 tasks.register('copyDependencies', Copy) {
