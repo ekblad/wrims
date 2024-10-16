@@ -38,6 +38,7 @@ public class WPPExceptionView extends ViewPart implements ISelectionListener{
 	public void setFocus() {
 		// TODO: DWR Review Change
 		//This was causing runtime exceptions on load.
+		//Tracking under github issue: https://github.com/CentralValleyModeling/wrims/issues/154
 		//getSite().getPart().setFocus();
 		try
 		{
