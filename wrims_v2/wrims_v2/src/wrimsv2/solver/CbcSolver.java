@@ -298,13 +298,14 @@ public class CbcSolver {
 		//jCbc.writeLp1(model, "test", 1e-14, 14);
 		long beginT = System.currentTimeMillis();
 		//int[] modelStatus =null;
-		if(usejCbc2021a){
-			solve_jCbc2021a();
-		} else if(usejCbc2021){
-			solve_jCbc2021();
-		} else {
-			solve();
-		}
+		// if(usejCbc2021a){
+		// 	solve_jCbc2021a();
+		// } else if(usejCbc2021){
+		// 	solve_jCbc2021();
+		// } else {
+		// 	solve();
+		// }
+		solve();
 		long endT = System.currentTimeMillis();
 		
 		double time_second = (endT-beginT)/1000.;
@@ -1136,6 +1137,7 @@ public class CbcSolver {
 					//intSolSize = 0;
 					ret = jCbc.solve_unified(model, solver, null, null, 0, 0);
 				}
+				ControlData.solve_unified_count += 1;
 	
 				//jCbc.setIntegerTolerance(model, integerT);
 				//writeCbcLp("", true);
@@ -1149,6 +1151,7 @@ public class CbcSolver {
 				jCbc.setPrimalTolerance(model, solve_2_primalT);
 				jCbc.setIntegerTolerance(model, integerT);
 				jCbc.solve_2(model, solver, 0);	
+				ControlData.solve_2_count += 1;
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);
 				
@@ -1156,7 +1159,8 @@ public class CbcSolver {
 				solveName="3__";
 				jCbc.setPrimalTolerance(model, solve_3_primalT);
 				jCbc.setIntegerTolerance(model, integerT);
-				jCbc.solve_3(model, solver, 0);		
+				jCbc.solve_3(model, solver, 0);
+				ControlData.solve_3_count += 1;
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);
 				
@@ -1164,6 +1168,7 @@ public class CbcSolver {
 				solveName="cal";
 				jCbc.setIntegerTolerance(model, integerT);
 				jCbc.callCbc("-log 0 -solve", model);
+				ControlData.solve_Cbc_count += 1;	
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);
 				
@@ -1208,7 +1213,7 @@ public class CbcSolver {
 				jCbc.setPrimalTolerance(model, solve_whs_primalT);
 				jCbc.setIntegerTolerance(model, integerT);
 				jCbc.solve_whs(model,solver,names,values,intSolSize,0);
-							
+				ControlData.solve_whs_count += 1;	
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);		
 				
@@ -1219,9 +1224,11 @@ public class CbcSolver {
 					if (warm_2nd_solvFunc == solv2){
 						//note_msg(jCbc.getModelName(solver), " Use solve_2");
 						solve_2();
+						ControlData.solve_2_count += 1;
 					} else if (warm_2nd_solvFunc == solv3){
 						//note_msg(jCbc.getModelName(solver), " Use solve_3");
 						solve_3();
+						ControlData.solve_3_count += 1;
 					} else {
 						System.out.println("Error in warm 2nd solve function.");
 					}	
@@ -1231,8 +1238,10 @@ public class CbcSolver {
 				
 				if (warm_2nd_solvFunc == solv2){
 					solve_2();
+					ControlData.solve_2_count += 1;	
 				} else if (warm_2nd_solvFunc == solv3){
 					solve_3();
+					ControlData.solve_3_count += 1;
 				} else {
 					System.out.println("Error in warm 2nd solve function.");
 				}
@@ -1244,7 +1253,8 @@ public class CbcSolver {
 			if (status != 0 || status2 != 0) {
 				note_msg(" Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax);
 				reloadProblem(false, "");
-				solve_2(solve_2_primalT_relax, "2R_");	
+				solve_2(solve_2_primalT_relax, "2R_");
+				ControlData.solve_2_count += 1;
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);
 			}	
@@ -1317,7 +1327,8 @@ public class CbcSolver {
 					if (cbcViolationRetry) {
 						note_msg(" Solve_"+solveName+" has violations. Use callCbc");
 						reloadProblem(false, "");
-						callCbc();	
+						callCbc();
+						ControlData.solve_Cbc_count += 1;	
 						status = jCbc.status(model);
 						status2 = jCbc.secondaryStatus(model);
 					}

@@ -211,6 +211,12 @@ public class ControlData {
 	public static int n_anngetndo_x2_curmonndosplit=0;
 	public static int t_annec_matchdsm2=0;
 	public static int n_annec_matchdsm2=0;
+
+	public static int solve_unified_count=0;
+	public static int solve_2_count=0;
+	public static int solve_3_count=0;
+	public static int solve_Cbc_count=0;
+	public static int solve_whs_count=0;
 	
 	public static int pid=-1;
 	

@@ -279,6 +279,7 @@ public class Controller {
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 						//if (ControlData.currYear==1923 && ControlData.currMonth==9) new MultiStepAnalyzer();
@@ -399,6 +400,7 @@ public class Controller {
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -562,6 +564,7 @@ public class Controller {
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
