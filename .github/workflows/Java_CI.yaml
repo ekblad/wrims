@@ -63,3 +63,10 @@ jobs:
         name: jdiagram
         path: |
           ./jdiagram/build/libs/*.jar
+
+    - name: Upload xtext-editor jar
+      uses: actions/upload-artifact@v4.0.0
+      with:
+        name: xtext-editor
+        path: |
+          ./xtext-editor/build/libs/*.jar

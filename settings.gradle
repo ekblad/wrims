@@ -5,7 +5,7 @@ include 'wrims-comparison-test'
 include 'wrims-ide'
 include 'dwr-hecdssvue'
 include 'jdiagram'
-include 'xtext'
+include 'xtext-editor'
 
 // If there is no gradle.properties when Gradle starts up, copy the template into place
 if (!file('gradle.properties').exists()) {
