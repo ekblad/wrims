@@ -1,4 +1,3 @@
-
 module gov.ca.dwr.wresl.xtext.editor.generator.WreslEditorGeneratorMWE
 
 import org.eclipse.emf.mwe.utils.*

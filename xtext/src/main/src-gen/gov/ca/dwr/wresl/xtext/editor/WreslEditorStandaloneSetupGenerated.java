@@ -26,7 +26,7 @@ public class WreslEditorStandaloneSetupGenerated implements ISetup {
 	}
 	
 	public Injector createInjector() {
-		return Guice.createInjector(new gov.ca.dwr.wresl.xtext.editor.WreslEditorRuntimeModule());
+		return Guice.createInjector(new WreslEditorRuntimeModule());
 	}
 	
 	public void register(Injector injector) {
