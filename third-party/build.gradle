@@ -40,9 +40,8 @@ dependencies {
     api(":xml") //custom collection of sun xml packages
 
     //dlls
-    api fileTree(dir: '../libs/x64', include: ['cb.dll'])
-    api fileTree(dir: '../libs/x64', include: ['jep.dll'])
-
+    api fileTree(dir: 'libs/win-x64', include: ['cb.dll'])
+    api fileTree(dir: 'libs/win-x64', include: ['jep.dll'])
 }
 
 tasks.register('copyDependencies', Copy) {

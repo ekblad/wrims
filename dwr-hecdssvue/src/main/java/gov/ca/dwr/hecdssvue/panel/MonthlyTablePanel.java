@@ -153,13 +153,14 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		JLabel precisionLabel = new JLabel("Decimal Places: ");
 		add(panel, "North");
 		// _table = new MonthlyTable(this);
-		System.out.println("About to set the preferences.");
-		if(DssPluginCore._preferences==null)
-		{
-			DssPluginCore._preferences = Preferences.userNodeForPackage(getClass());
-		}
-		boolean showCommas = DssPluginCore._preferences.getBoolean(SHOW_COMMAS, true);
-		setShowCommas(showCommas);
+////		System.out.println("About to set the preferences.");
+////		if(DssPluginCore._preferences==null)
+////		{
+////			DssPluginCore._preferences = Preferences.userNodeForPackage(getClass());
+////		}
+//		boolean showCommas = DssPluginCore._preferences.getBoolean(SHOW_COMMAS, true);
+//		setShowCommas(showCommas);
+		setShowCommas(DssPluginCore._preferences.getBoolean(SHOW_COMMAS, true));
 		setShowTotalColumn(DssPluginCore._preferences.getBoolean(SHOW_TOTAL_COLUMN, true));
 		setDecimalPlaces(DssPluginCore._preferences.getInt(DECIMAL_PLACES, 0));
 		_table = new MonthlyTable(this);

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 import gov.ca.dwr.hecdssvue.components.NumericTextField;
@@ -41,6 +43,8 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		Logger logger = Logger.getLogger(Activator.class.getName());
+		logger.log(Level.WARNING, "hec dssvue activator start method called");
 		DssPluginCore._preferences = Preferences.userNodeForPackage(getClass());
 		HecDSSFileAccess.setMessageLevel(0);
 		DssPluginCore.swix = new SwingEngine(this);
