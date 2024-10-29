@@ -43,8 +43,6 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		Logger logger = Logger.getLogger(Activator.class.getName());
-		logger.log(Level.WARNING, "hec dssvue activator start method called");
 		DssPluginCore._preferences = Preferences.userNodeForPackage(getClass());
 		HecDSSFileAccess.setMessageLevel(0);
 		DssPluginCore.swix = new SwingEngine(this);

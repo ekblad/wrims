@@ -117,11 +117,6 @@ tasks.register('prepareBndFile') {
 
 jar {
     dependsOn tasks.named('prepareBndFile')
-
-    archiveBaseName.set('third-party')
-    archiveVersion.set('1.0.0.0')
-    archiveFileName.set("${archiveBaseName.get()}_${archiveVersion.get()}.jar")
-
     bundle {
         bndfile = tasks.named('prepareBndFile').get().outputs.files.first()
     }
