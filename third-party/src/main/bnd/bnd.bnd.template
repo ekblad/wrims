@@ -20,8 +20,6 @@ Bundle-NativeCode: \
     lib_x64/cb.dll; processor=x86_64, \
     lib_x64/jep.dll; processor=x86_64 \
 
--includeresource: \
-    icons = icons,\
-    lib_x64/jep.dll=libs/win-x64/jep.dll,\
-    lib_x64/cb.dll=libs/win-x64/cb.dll
+-noee true
+
 

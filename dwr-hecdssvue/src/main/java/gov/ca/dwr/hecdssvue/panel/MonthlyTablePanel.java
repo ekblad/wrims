@@ -142,7 +142,6 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 
 	public MonthlyTablePanel(Frame frame) {
 		_frame=frame;
-		//_preferences = Preferences.userNodeForPackage(getClass());
 		_sysClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		setLayout(new BorderLayout());
 		JPanel panel = new JPanel();
@@ -152,14 +151,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 																	// timezone??????
 		JLabel precisionLabel = new JLabel("Decimal Places: ");
 		add(panel, "North");
-		// _table = new MonthlyTable(this);
-////		System.out.println("About to set the preferences.");
-////		if(DssPluginCore._preferences==null)
-////		{
-////			DssPluginCore._preferences = Preferences.userNodeForPackage(getClass());
-////		}
-//		boolean showCommas = DssPluginCore._preferences.getBoolean(SHOW_COMMAS, true);
-//		setShowCommas(showCommas);
+
 		setShowCommas(DssPluginCore._preferences.getBoolean(SHOW_COMMAS, true));
 		setShowTotalColumn(DssPluginCore._preferences.getBoolean(SHOW_TOTAL_COLUMN, true));
 		setDecimalPlaces(DssPluginCore._preferences.getInt(DECIMAL_PLACES, 0));
