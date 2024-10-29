@@ -1,0 +1,63 @@
+plugins {
+    id 'library.deps-conventions'
+    id 'library.java-conventions'
+}
+
+ext {
+    wrimsGuiFolder = "wrims2_gui_x64_${version}"
+}
+
+dependencies {
+    implementation project(':third-party')
+    implementation project(':wrims-ide')
+    implementation project(':dwr-hecdssvue')
+}
+
+configurations.all {
+    exclude group: "javax.media", module: "jai_core"
+    exclude group: "javax.media", module: "jai_codec"
+    exclude group: "com.sun.media", module: "jai_imageio"
+}
+
+// Task to unzip wrims_gui_template.zip
+task unzipWrimsGuiTemplate(type: Copy) {
+    from(zipTree('J:/WRIMS/wrims_gui_template.zip'))
+    into("${buildDir}/${wrimsGuiFolder}")
+}
+
+// Task that removes jars containing "hecdssvue", "jdiagram", or "wrimsv2" from the ${buildDir}/${wrimsGuiFolder}/dropins folder
+task removeJarsFromDropins(type: Delete) {
+    delete fileTree(dir: "${buildDir}/${wrimsGuiFolder}/dropins", include: ['*hecdssvue*.jar', '*jdiagram*.jar', '*wrimsv2*.jar'])
+}
+
+removeJarsFromDropins.dependsOn(unzipWrimsGuiTemplate)
+
+// Task to copy JARs to dropins folder
+task copyJarsToDropins(type: Copy) {
+    from(fileTree(dir: '../third-party/build/libs', include: '*.jar'))
+    from(fileTree(dir: '../wrims-ide/build/libs', include: '*.jar'))
+    from(fileTree(dir: '../dwr-hecdssvue/build/libs', include: '*.jar'))
+    into("${buildDir}/${wrimsGuiFolder}/dropins")
+}
+
+copyJarsToDropins.dependsOn(removeJarsFromDropins, ':third-party:jar', ':wrims-ide:jar', ':dwr-hecdssvue:jar')
+
+//task that copies the src/main/configuration/simpleconfigurator/bundles.info file into
+// build/wrims_gui_x64_${version}/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info
+task copyBundlesInfo(type: Copy) {
+    from("src/main/configuration/simpleconfigurator/bundles.info")
+    into("${buildDir}/${wrimsGuiFolder}/configuration/org.eclipse.equinox.simpleconfigurator")
+}
+
+copyBundlesInfo.dependsOn(copyJarsToDropins)
+
+// Task that zips the wrims_gui_x64_${version} folder into a zip file
+task zipWrimsGui(type: Zip) {
+    from("${buildDir}/${wrimsGuiFolder}")
+    archiveFileName = "${wrimsGuiFolder}.zip"
+    destinationDirectory = file("${buildDir}/installer")
+}
+
+zipWrimsGui.dependsOn(copyBundlesInfo)
+
+tasks.build.dependsOn(zipWrimsGui)
