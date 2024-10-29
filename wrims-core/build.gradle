@@ -18,6 +18,7 @@ sourceSets {
 
 dependencies {
     antlr libs.antlr
+    implementation libs.antlr.runtime
 
     api libs.hec.monolith
     implementation libs.hec.nucleus.metadata
