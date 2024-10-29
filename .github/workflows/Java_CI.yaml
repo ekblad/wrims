@@ -23,6 +23,11 @@ jobs:
         distribution: 'temurin'
         cache: 'gradle'
 
+    - name: Clean and build wrims-core module
+      run: |
+        ./gradlew :wrims-core:clean
+        ./gradlew :wrims-core:build
+
     - name: Build with Gradle
       run: |
         ./gradlew clean

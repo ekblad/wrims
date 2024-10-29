@@ -1,6 +1,6 @@
 rootProject.name = 'cvm-wrims'
-include 'third-party'
 include 'wrims-core'
+include 'third-party'
 include 'wrims-comparison-test'
 include 'wrims-ide'
 include 'dwr-hecdssvue'
