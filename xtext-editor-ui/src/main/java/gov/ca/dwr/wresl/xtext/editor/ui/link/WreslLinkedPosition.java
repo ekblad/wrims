@@ -1,6 +1,5 @@
 package gov.ca.dwr.wresl.xtext.editor.ui.link;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.link.LinkedPosition;

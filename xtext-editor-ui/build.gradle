@@ -15,12 +15,6 @@ sourceSets {
     }
 }
 
-jar {
-    archiveBaseName.set('xtext-editor-ui')
-    archiveVersion.set('1.0.0.0')
-    archiveFileName.set("${archiveBaseName.get()}_${archiveVersion.get()}.jar")
-}
-
 dependencies {
     //module dependencies
     implementation project(':wrims-ide')

@@ -2,23 +2,17 @@ package gov.ca.dwr.wresl.xtext.editor.ui.texthover;
 
 import java.util.Map;
 
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConstDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DeclarationImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DvarDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalDefImpl;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.SvarDefImpl;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TermImpl;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.UnaryImpl;
 
 import org.eclipse.debug.core.DebugException;
-import org.eclipse.debug.core.model.IValue;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
