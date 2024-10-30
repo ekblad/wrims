@@ -21,8 +21,10 @@ dependencies {
     implementation project(':third-party')
     implementation project(':wrims-ide')
 
-    //eclipse libs
+    //eclipse libs:
     implementation fileTree(dir: '../eclipse-luna-libs', include: ['*.jar'])
+    //NOTE: These jars will get refactored into a github package zip. Tracking under issue: https://github.com/CentralValleyModeling/wrims/issues/148
+
 
     //add test dependency on junit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
