@@ -1,5 +1,5 @@
-Bundle-SymbolicName: gov.ca.dwr.jdiagram;singleton:=true
-Bundle-Name: Jdiagram
+Bundle-SymbolicName: jdiagram;singleton:=true
+Bundle-Name: jdiagram
 Bundle-Version: 1.0.0.0
 Bundle-ManifestVersion: 2.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -26,7 +26,7 @@ Import-Package: \
     wrimsv2_plugin.debugger.exception,\
     wrimsv2_plugin.tools
 
-Export-Package: \
+-exportcontents: \
     com.mindfusion.common,\
     com.mindfusion.diagramming,\
     com.mindfusion.diagramming.export,\
@@ -35,16 +35,15 @@ Export-Package: \
     com.mindfusion.drawing,\
     com.mindfusion.graphs,\
     com.mindfusion.pdf,\
-    com.mindfusion.svg,\
+    com.mindfusion.svg
+
+Export-Package: \
     gov.ca.dwr.jdiagram,\
     gov.ca.dwr.jdiagram.views
 
 -includeresource: \
-  lib_x64/JDiagram.jar=../libs/JDiagram.jar,\
+  lib_x64/JDiagram.jar=../third-party/libs/JDiagram.jar;lib:=true,\
   plugin.xml = plugin.xml,\
   contexts.xml = contexts.xml,\
   icons = icons
 
-Bundle-ClassPath: \
-    lib_x64/JDiagram.jar,\
-    .;
