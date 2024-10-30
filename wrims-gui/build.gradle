@@ -7,12 +7,6 @@ ext {
     wrimsGuiFolder = "wrims2_gui_x64_${version}"
 }
 
-dependencies {
-    implementation project(':third-party')
-    implementation project(':wrims-ide')
-    implementation project(':dwr-hecdssvue')
-}
-
 configurations.all {
     exclude group: "javax.media", module: "jai_core"
     exclude group: "javax.media", module: "jai_codec"
