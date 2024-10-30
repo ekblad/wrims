@@ -36,14 +36,7 @@ public class WPPExceptionView extends ViewPart implements ISelectionListener{
 
 	@Override
 	public void setFocus() {
-		try
-		{
-			list.setFocus();
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+		getSite().getPart().setFocus();
 	}
 
 }

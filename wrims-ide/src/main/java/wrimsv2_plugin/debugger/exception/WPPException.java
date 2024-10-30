@@ -1,8 +1,6 @@
 package wrimsv2_plugin.debugger.exception;
 
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -15,11 +13,9 @@ public class WPPException {
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				try {
-					IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
-					IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
-					WPPExceptionView exceptionView = (WPPExceptionView) activePage.showView(DebugCorePlugin.ID_WPP_EXCEPTION_VIEW);
+					WPPExceptionView exceptionView = (WPPExceptionView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_EXCEPTION_VIEW);
 					exceptionView.addException(e);
-				} catch (Exception e) {
+				} catch (PartInitException e) {
 					WPPException.handleException(e);
 				}
 			}
