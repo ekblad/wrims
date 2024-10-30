@@ -16,11 +16,7 @@ com.ibm.icu,52.1.1.v201501240615,plugins/com.ibm.icu_52.1.1.v201501240615.jar,4,
 com.jcraft.jsch,0.1.51.v201410302000,plugins/com.jcraft.jsch_0.1.51.v201410302000.jar,4,false
 com.jcraft.jsch,0.1.50.v201403120620,plugins/com.jcraft.jsch_0.1.50.v201403120620.jar,4,false
 com.sun.el,2.2.0.v201303151357,plugins/com.sun.el_2.2.0.v201303151357.jar,4,false
-third-party,1.0.0.0,dropins/third-party_1.0.0.0.jar,4,false
-dwr-hecdssvue,1.0.0.0,dropins/dwr-hecdssvue_1.0.0.0.jar,4,false
-gov.ca.dwr.jdiagram,1.0.0.0,dropins/gov.ca.dwr.jdiagram_1.0.0.0.jar,4,false
-gov.ca.dwr.wresl.xtext.editor,1.0.0.0,dropins/gov.ca.dwr.wresl.xtext.editor_1.0.0.0.jar,4,false
-gov.ca.dwr.wresl.xtext.editor.ui,1.0.0.0,dropins/gov.ca.dwr.wresl.xtext.editor.ui_1.0.0.0.jar,4,false
+dwr-hecdssvue,1.0.0.0,dropins/dwr-hecdssvue-1.0.0.0.jar,4,false
 hec-dependencies,1.0.0.0,dropins/hec-dependencies_1.0.0.0.jar,4,false
 javaewah,0.7.9.v201401101600,plugins/javaewah_0.7.9.v201401101600.jar,4,false
 javax.annotation,1.2.0.v201401042248,plugins/javax.annotation_1.2.0.v201401042248.jar,4,false
@@ -30,6 +26,7 @@ javax.servlet,3.0.0.v201112011016,plugins/javax.servlet_3.0.0.v201112011016.jar,
 javax.servlet.jsp,2.2.0.v201112011158,plugins/javax.servlet.jsp_2.2.0.v201112011158.jar,4,false
 javax.wsdl,1.5.1.v201012040544,plugins/javax.wsdl_1.5.1.v201012040544.jar,4,false
 javax.xml,1.3.4.v201005080400,plugins/javax.xml_1.3.4.v201005080400.jar,4,false
+jdiagram,1.0.0.0,dropins/jdiagram-1.0.0.0.jar,4,false
 net.sourceforge.lpg.lpgjavaruntime,1.1.0.v201004271650,plugins/net.sourceforge.lpg.lpgjavaruntime_1.1.0.v201004271650.jar,4,false
 org.antlr.runtime,3.2.0.v201101311130,plugins/org.antlr.runtime_3.2.0.v201101311130.jar,4,false
 org.apache.ant,1.9.2.v201404171502,plugins/org.apache.ant_1.9.2.v201404171502/,4,false
@@ -670,4 +667,7 @@ org.w3c.css.sac,1.3.1.v200903091627,plugins/org.w3c.css.sac_1.3.1.v200903091627.
 org.w3c.dom.events,3.0.0.draft20060413_v201105210656,plugins/org.w3c.dom.events_3.0.0.draft20060413_v201105210656.jar,4,false
 org.w3c.dom.smil,1.0.0.v200806040011,plugins/org.w3c.dom.smil_1.0.0.v200806040011.jar,4,false
 org.w3c.dom.svg,1.1.0.v201011041433,plugins/org.w3c.dom.svg_1.1.0.v201011041433.jar,4,false
-wrims-ide,1.0.0.0,dropins/wrims-ide_1.0.0.0.jar,4,false
+third-party,1.0.0.0,dropins/third-party-1.0.0.0.jar,4,false
+wrims-ide,1.0.0.0,dropins/wrims-ide-1.0.0.0.jar,4,false
+xtext-editor,1.0.0.0,dropins/xtext-editor-1.0.0.0.jar,4,false
+xtext-editor-ui,1.0.0.0,dropins/xtext-editor-ui-1.0.0.0.jar,4,false

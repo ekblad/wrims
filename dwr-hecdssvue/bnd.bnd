@@ -45,9 +45,7 @@ Import-Package: \
     calsim.schematic,\
     calsim.schematic.input,\
     calsim.wreslcoder,\
-    calsim.wreslcoder.wresl,\
-    org.swixml,\
-    org.swixml.converters
+    calsim.wreslcoder.wresl
 
 Export-Package: \
     gov.ca.dwr.hecdssvue,\

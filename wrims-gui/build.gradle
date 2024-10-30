@@ -27,7 +27,7 @@ task unzipWrimsGuiTemplate(type: Copy) {
 
 // Task that removes jars containing "hecdssvue", "jdiagram", or "wrimsv2" from the ${buildDir}/${wrimsGuiFolder}/dropins folder
 task removeJarsFromDropins(type: Delete) {
-    delete fileTree(dir: "${buildDir}/${wrimsGuiFolder}/dropins", include: ['*hecdssvue*.jar', '*jdiagram*.jar', '*wrimsv2*.jar'])
+    delete fileTree(dir: "${buildDir}/${wrimsGuiFolder}/dropins", include: ['*hecdssvue*.jar', '*jdiagram*.jar', '*wrimsv2*.jar', '*xtext*.jar'])
 }
 
 removeJarsFromDropins.dependsOn(unzipWrimsGuiTemplate)
@@ -37,10 +37,13 @@ task copyJarsToDropins(type: Copy) {
     from(fileTree(dir: '../third-party/build/libs', include: '*.jar'))
     from(fileTree(dir: '../wrims-ide/build/libs', include: '*.jar'))
     from(fileTree(dir: '../dwr-hecdssvue/build/libs', include: '*.jar'))
+    from(fileTree(dir: '../jdiagram/build/libs', include: '*.jar'))
+    from(fileTree(dir: '../xtext-editor/build/libs', include: '*.jar'))
+    from(fileTree(dir: '../xtext-editor-ui/build/libs', include: '*.jar'))
     into("${buildDir}/${wrimsGuiFolder}/dropins")
 }
 
-copyJarsToDropins.dependsOn(removeJarsFromDropins, ':third-party:jar', ':wrims-ide:jar', ':dwr-hecdssvue:jar')
+copyJarsToDropins.dependsOn(removeJarsFromDropins, ':third-party:jar', ':wrims-ide:jar', ':dwr-hecdssvue:jar', ':jdiagram:jar', ':xtext-editor:jar', ':xtext-editor-ui:jar')
 
 //task that copies the src/main/configuration/simpleconfigurator/bundles.info file into
 // build/wrims_gui_x64_${version}/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info
