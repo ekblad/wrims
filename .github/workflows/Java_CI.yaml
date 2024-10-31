@@ -9,6 +9,9 @@ on:
       - Feature/wrims-devops
       - Feature/wrims-installer-devops
 
+permissions:
+  packages: write
+
 jobs:
   build:
 
@@ -25,6 +28,8 @@ jobs:
         cache: 'gradle'
 
     - name: Build with Gradle
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         ./gradlew clean
         ./gradlew :wrims-core:build
