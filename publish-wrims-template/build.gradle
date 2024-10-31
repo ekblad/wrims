@@ -1,0 +1,102 @@
+plugins {
+    id 'maven-publish'
+    id 'distribution'
+}
+
+def zipFilePath = project.findProperty('wrimsGuiZipFile') ?: 'C:/WRIMS/wrims_gui_template.zip'
+def templateCoreFile = project.findProperty('wrimsGuiZipFile') ?: 'C:/WRIMS/wrims_gui_template_core.zip'
+
+repositories {
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/CentralValleyModeling/wrims")
+        credentials {
+            username = project.findProperty('githubToken') ?: System.getenv('GITHUB_TOKEN')
+            password = ''
+        }
+    }
+}
+
+configurations {
+    testFile
+}
+
+publishing {
+    publications {
+        wrimsGuiTemplateCore(MavenPublication) {
+            groupId 'gov.ca.dwr'
+            artifactId 'wrims_gui_template_core'
+            version = '1.0.0'
+            artifact(templateCoreFile) {
+                extension 'zip'
+            }
+            pom {
+                name = 'WRIMS GUI Template Core'
+                description = 'Template for WRIMS GUI'
+                url = 'https://github.com/CentralValleyModeling/wrims'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/CentralValleyModeling/wrims.git'
+                    developerConnection = 'scm:git:ssh://github.com/CentralValleyModeling/wrims.git'
+                    url = 'https://github.com/CentralValleyModeling/wrims'
+                }
+            }
+        }
+//        wrimsGuiTemplate(MavenPublication) {
+//            groupId 'gov.ca.dwr'
+//            artifactId 'wrims_gui_template'
+//            version = project.findProperty('postVersion') ?: "1.0.3"
+//            artifact(zipFilePath) {
+//                extension 'zip'
+//            }
+//            pom {
+//                name = 'WRIMS GUI Template'
+//                description = 'Template for WRIMS GUI'
+//                url = 'https://github.com/CentralValleyModeling/wrims'
+//                licenses {
+//                    license {
+//                        name = 'The Apache License, Version 2.0'
+//                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                    }
+//                }
+//                scm {
+//                    connection = 'scm:git:git://github.com/CentralValleyModeling/wrims.git'
+//                    developerConnection = 'scm:git:ssh://github.com/CentralValleyModeling/wrims.git'
+//                    url = 'https://github.com/CentralValleyModeling/wrims'
+//                }
+//            }
+//        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/CentralValleyModeling/wrims")
+            credentials {
+                username = project.findProperty('githubToken') ?: System.getenv('GITHUB_TOKEN')
+                password = ''
+            }
+        }
+    }
+}
+
+task verifyPublishedFile {
+    doLast {
+        def version = project.findProperty('postVersion') ?: '1.0.0'
+        def url = new URL("https://maven.pkg.github.com/CentralValleyModeling/wrims/gov/ca/dwr/wrims_gui_template/${version}/wrims_gui_template-${version}.zip")
+        def connection = url.openConnection()
+        connection.setRequestProperty("Authorization", "Bearer ${project.findProperty('githubToken') ?: System.getenv('GITHUB_TOKEN')}")
+        connection.connect()
+
+        if (connection.responseCode == 200) {
+            println "File is accessible."
+        } else {
+            println "Failed to access the file. Response code: ${connection.responseCode}"
+        }
+    }
+}
