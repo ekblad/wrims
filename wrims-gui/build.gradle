@@ -15,7 +15,7 @@ configurations {
 // Add the ZIP file as a dependency
 dependencies {
 //    zipFile "gov.ca.dwr:cal_lite_test_01:+"
-    zipFile "gov.ca.dwr:wrims_gui_template_core:1.0.0@zip"
+    wrimsTemplateCoreZip "gov.ca.dwr:wrims_gui_template_core:1.0.0@zip"
 }
 
 // Task to download and unzip the ZIP file
