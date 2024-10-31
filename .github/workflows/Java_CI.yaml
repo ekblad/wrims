@@ -9,8 +9,7 @@ on:
       - Feature/wrims-devops
       - Feature/wrims-installer-devops
 
-permissions:
-  packages: write
+permissions: read-all
 
 jobs:
   build:
