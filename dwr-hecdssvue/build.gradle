@@ -1,0 +1,33 @@
+plugins{
+    id 'library.deps-conventions'
+    id 'library.java-conventions'
+
+    // The following plugin is used to build the OSGI bundle
+    id 'biz.aQute.bnd.builder' version '6.4.0'
+}
+
+configurations {
+    eclipseLibs
+    implementation.extendsFrom(eclipseLibs)
+}
+
+dependencies {
+    //additional dependencies
+    implementation libs.hec.monolith
+    implementation libs.hec.nucleus.metadata
+    implementation libs.dssgui
+
+    //module dependencies
+    implementation project(':third-party')
+    implementation project(':wrims-ide')
+
+    //eclipse libs:
+    implementation fileTree(dir: '../eclipse-luna-libs', include: ['*.jar'])
+    //NOTE: These jars will get refactored into a github package zip. Tracking under issue: https://github.com/CentralValleyModeling/wrims/issues/148
+}
+
+configurations.configureEach {
+    exclude group: "javax.media", module: "jai_core"
+    exclude group: "javax.media", module: "jai_codec"
+    exclude group: "com.sun.media", module: "jai_imageio"
+}
