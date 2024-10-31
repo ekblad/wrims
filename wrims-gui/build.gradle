@@ -7,15 +7,14 @@ def wrimsTemplateVersion = '1.0.0'
 def wrimsGuiFolder = "wrims2_gui_x64_${version}"
 
 configurations {
-    wrimsTemplateCoreZip {
-        canBeResolved = true
-    }
+    wrimsTemplateCoreZip
+    wrimsSchematicZip
 }
 
 // Add the ZIP file as a dependency
 dependencies {
-//    zipFile "gov.ca.dwr:cal_lite_test_01:+"
     wrimsTemplateCoreZip "gov.ca.dwr:wrims_gui_template_core:1.0.0@zip"
+    wrimsSchematicZip "gov.ca.dwr:wrims-gui-schematic:1.0.0@zip"
 }
 
 // Task to download and unzip the ZIP file
