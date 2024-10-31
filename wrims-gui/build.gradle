@@ -20,7 +20,7 @@ dependencies {
 // Task to download and unzip the ZIP file
 task unzipWrimsGuiTemplate(type: Copy) {
     from(zipTree(configurations.wrimsTemplateCoreZip.singleFile))
-    into("${buildDir}/wrims_gui_template")
+    into("${buildDir}/${wrimsGuiFolder}")
 }
 
 unzipWrimsGuiTemplate.dependsOn configurations.wrimsTemplateCoreZip
