@@ -7,7 +7,7 @@ def wrimsTemplateVersion = '1.0.0'
 def wrimsGuiFolder = "wrims2_gui_x64_${version}"
 
 configurations {
-    zipFile {
+    wrimsTemplateCoreZip {
         canBeResolved = true
     }
 }
@@ -20,11 +20,11 @@ dependencies {
 
 // Task to download and unzip the ZIP file
 task unzipWrimsGuiTemplate(type: Copy) {
-    from(zipTree(configurations.zipFile.singleFile))
+    from(zipTree(configurations.wrimsTemplateCoreZip.singleFile))
     into("${buildDir}/wrims_gui_template")
 }
 
-unzipWrimsGuiTemplate.dependsOn configurations.zipFile
+unzipWrimsGuiTemplate.dependsOn configurations.wrimsTemplateCoreZip
 
 // Task that removes jars containing "hecdssvue", "jdiagram", or "wrimsv2" from the ${buildDir}/${wrimsGuiFolder}/dropins folder
 task removeJarsFromDropins(type: Delete) {
