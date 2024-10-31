@@ -9,7 +9,7 @@ def wrimsGuiDownload = "${buildDir}/download/wrims2_gui_download.zip"
 
 //download the latest WRIMS GUI installer from DWR
 tasks.register('downloadWrimsGuiInstaller', Download) {
-    src 'https://data.cnra.ca.gov/dataset/0f6b03b4-7de8-4579-8aa0-60f73d9d21fb/resource/09dc8af7-c6a5-4a6c-93d0-ae9d793c5abd/download/wrims2_gui_x64_20231027.zip'
+    src 'https://data.cnra.ca.gov/dataset/0f6b03b4-7de8-4579-8aa0-60f73d9d21fb/resource/89f60e4a-c0c2-4ca2-acac-beb6bdb5d69e/download/wrims2_gui_x64_20240129.zip'
     dest new File(wrimsGuiDownload)
     onlyIfModified true
 }
