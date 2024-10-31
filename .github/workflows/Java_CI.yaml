@@ -32,6 +32,7 @@ jobs:
         ./gradlew clean
         ./gradlew :wrims-core:build
         ./gradlew build
+        ./gradlew :wrims-gui:clean
         ./gradlew :wrims-gui:zipWrimsGui
 
     - name: Upload Core jar
