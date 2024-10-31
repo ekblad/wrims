@@ -36,6 +36,9 @@ public class WPPExceptionView extends ViewPart implements ISelectionListener{
 
 	@Override
 	public void setFocus() {
+		// TODO: DWR Review Change
+		//This was causing runtime exceptions on load.
+		//getSite().getPart().setFocus();
 		try
 		{
 			list.setFocus();
@@ -45,19 +48,4 @@ public class WPPExceptionView extends ViewPart implements ISelectionListener{
 			e.printStackTrace();
 		}
 	}
-
-//	@Override
-//	public void setFocus() {
-//		try
-//		{
-//			IWorkbenchPartSite site = getSite();
-//			IWorkbenchPart part = site.getPart();
-//			part.setFocus();
-//		}
-//		catch(Exception e)
-//		{
-//			e.printStackTrace();
-//		}
-//	}
-
 }
