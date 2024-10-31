@@ -17,10 +17,11 @@ repositories {
 
     //provider for the wrims-gui-template
     maven {
-        url "https://maven.pkg.github.com/CentralValleyModeling/wrims"
+        name = "GitHubPackages-WRIMS"
+        url = uri("https://maven.pkg.github.com/CentralValleyModeling/wrims")
         credentials {
-            username = project.findProperty('githubToken') ?: System.getenv('GITHUB_TOKEN')
-            password = ''
+            username = project.findProperty('cvmUserId') ?: System.getenv('PKG_USERNAME')
+            password = project.findProperty('cvmPassword') ?: System.getenv('PKG_TOKEN')
         }
     }
 
