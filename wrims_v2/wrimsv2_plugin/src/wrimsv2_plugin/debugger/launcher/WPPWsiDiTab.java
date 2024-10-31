@@ -216,12 +216,12 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
 				out.println("Solver            cbc");
 				//out.println("cbclibname        jCbc_2.9.8.1");
-			}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.10")){
-				out.println("Solver            cbc");
-				out.println("cbclibname        jCbc_v2.10");
-			}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.9.8")){
-				out.println("Solver            cbc");
-				out.println("cbclibname        jCbc");
+			//}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.10")){
+			//	out.println("Solver            cbc");
+			//	out.println("cbclibname        jCbc_v2.10");
+			//}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.9.8")){
+			//	out.println("Solver            cbc");
+			//	out.println("cbclibname        jCbc");
 			}else{
 				out.println("Solver             "+DebugCorePlugin.solver.toLowerCase());
 			}
@@ -395,19 +395,19 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			jarXA="XAOptimizer.jar";
 		}
 		try {
-			cbcSelVer=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers.get(0));
+			cbcSelVer=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, "");
 		} catch (CoreException e) {
-			cbcSelVer=DebugCorePlugin.cbcVers.get(0);
+			cbcSelVer="";
 		}
 		try {
-			gurobiSelVer=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, DebugCorePlugin.gurobiVers.get(0));
+			gurobiSelVer=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, "");
 		} catch (CoreException e) {
-			gurobiSelVer=DebugCorePlugin.gurobiVers.get(0);
+			gurobiSelVer="";
 		}
 		try {
-			xaSelVer=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SELXA, DebugCorePlugin.xaVers.get(0));
+			xaSelVer=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SELXA, "");
 		} catch (CoreException e) {
-			xaSelVer=DebugCorePlugin.xaVers.get(0);
+			xaSelVer="";
 		}
 		
 		String cbcFolder="lib\\solvers\\cbc_"+cbcSelVer;

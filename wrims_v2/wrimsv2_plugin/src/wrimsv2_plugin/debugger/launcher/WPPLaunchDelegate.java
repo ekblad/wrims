@@ -499,9 +499,9 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}else{
 				jarXA="XAOptimizer.jar";
 			}
-			DebugCorePlugin.cbcSelVer=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers.get(0));
-			DebugCorePlugin.gurobiSelVer=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, DebugCorePlugin.gurobiVers.get(0));
-			DebugCorePlugin.xaSelVer=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELXA, DebugCorePlugin.xaVers.get(0));
+			DebugCorePlugin.cbcSelVer=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, "");
+			DebugCorePlugin.gurobiSelVer=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, "");
+			DebugCorePlugin.xaSelVer=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELXA, "");
 			allowSvTsInit=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no");
 			allRestartFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no");
 			numberRestartFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, "12");

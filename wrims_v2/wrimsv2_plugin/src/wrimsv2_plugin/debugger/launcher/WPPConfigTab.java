@@ -463,9 +463,9 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DSSENDOUTPUT, "yes");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_YEARSECTIONOUTPUT, "10");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, "24");
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers.get(0));
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, DebugCorePlugin.gurobiVers.get(0));
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELXA, DebugCorePlugin.xaVers.get(0));
+		if (DebugCorePlugin.cbcVers.size()>0) configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers.get(0));
+		if (DebugCorePlugin.gurobiVers.size()>0) configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, DebugCorePlugin.gurobiVers.get(0));
+		if (DebugCorePlugin.xaVers.size()>0) configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELXA, DebugCorePlugin.xaVers.get(0));
 	}
 
 	@Override
@@ -495,28 +495,40 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			WPPException.handleException(e);
 		}
 		
-		String cbcSelVer = DebugCorePlugin.cbcVers.get(0);
-		try {
-			cbcSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers.get(0));
-			cbcCombo.setText(cbcSelVer);
-		} catch (CoreException e) {
-			WPPException.handleException(e);
+		if (DebugCorePlugin.cbcVers.size()>0){
+			String cbcSelVer = DebugCorePlugin.cbcVers.get(0);
+			try {
+				cbcSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers.get(0));
+				cbcCombo.setText(cbcSelVer);
+			} catch (CoreException e) {
+				WPPException.handleException(e);
+			}
+		}else{
+			cbcCombo.setText("");
 		}
 		
-		String gurobiSelVer = DebugCorePlugin.gurobiVers.get(0);
-		try {
-			gurobiSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, DebugCorePlugin.gurobiVers.get(0));
-			gurobiCombo.setText(gurobiSelVer);
-		} catch (CoreException e) {
-			WPPException.handleException(e);
+		if (DebugCorePlugin.gurobiVers.size()>0){
+			String gurobiSelVer = DebugCorePlugin.gurobiVers.get(0);
+			try {
+				gurobiSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, DebugCorePlugin.gurobiVers.get(0));
+				gurobiCombo.setText(gurobiSelVer);
+			} catch (CoreException e) {
+				WPPException.handleException(e);
+			}
+		}else{
+			gurobiCombo.setText("");
 		}
 		
-		String xaSelVer = DebugCorePlugin.xaVers.get(0);
-		try {
-			xaSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELXA, DebugCorePlugin.xaVers.get(0));
-			xaCombo.setText(xaSelVer);
-		} catch (CoreException e) {
-			WPPException.handleException(e);
+		if (DebugCorePlugin.xaVers.size()>0){
+			String xaSelVer = DebugCorePlugin.xaVers.get(0);
+			try {
+				xaSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELXA, DebugCorePlugin.xaVers.get(0));
+				xaCombo.setText(xaSelVer);
+			} catch (CoreException e) {
+				WPPException.handleException(e);
+			}
+		}else{
+			xaCombo.setText("");
 		}
 		
 		String allowSvTsInit = null;
