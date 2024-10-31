@@ -1,39 +1,35 @@
 plugins {
     id 'library.deps-conventions'
     id 'library.java-conventions'
+    id "de.undercouch.download" version "5.6.0"
 }
 
-def wrimsTemplateVersion = '1.0.0'
 def wrimsGuiFolder = "wrims2_gui_x64_${version}"
+def wrimsGuiDownload = "${buildDir}/download/wrims2_gui_download.zip"
 
-configurations {
-    wrimsTemplateCoreZip
-    wrimsSchematicZip
-}
-
-// Add the ZIP file as a dependency
-dependencies {
-    wrimsTemplateCoreZip "gov.ca.dwr:wrims_gui_template_core:1.0.0@zip"
-    wrimsSchematicZip "gov.ca.dwr:wrims-gui-schematic:1.0.0@zip"
+//download the latest WRIMS GUI installer from DWR
+tasks.register('downloadWrimsGuiInstaller', Download) {
+    src 'https://data.cnra.ca.gov/dataset/0f6b03b4-7de8-4579-8aa0-60f73d9d21fb/resource/09dc8af7-c6a5-4a6c-93d0-ae9d793c5abd/download/wrims2_gui_x64_20231027.zip'
+    dest new File(wrimsGuiDownload)
+    onlyIfModified true
 }
 
 // Task to download and unzip the ZIP file
-task unzipWrimsGuiTemplate(type: Copy) {
-    from(zipTree(configurations.wrimsTemplateCoreZip.singleFile))
+tasks.register('unzipWrimsGuiTemplate', Copy) {
+    dependsOn downloadWrimsGuiInstaller
+    from(zipTree(new File(wrimsGuiDownload)))
     into("${buildDir}/${wrimsGuiFolder}")
 }
 
-unzipWrimsGuiTemplate.dependsOn configurations.wrimsTemplateCoreZip
-
 // Task that removes jars containing "hecdssvue", "jdiagram", or "wrimsv2" from the ${buildDir}/${wrimsGuiFolder}/dropins folder
-task removeJarsFromDropins(type: Delete) {
+tasks.register('removeJarsFromDropins', Delete) {
+    dependsOn unzipWrimsGuiTemplate
     delete fileTree(dir: "${buildDir}/${wrimsGuiFolder}/dropins", include: ['*hecdssvue*.jar', '*jdiagram*.jar', '*wrimsv2*.jar', '*xtext*.jar'])
 }
 
-removeJarsFromDropins.dependsOn(unzipWrimsGuiTemplate)
-
 // Task to copy JARs to dropins folder
-task copyJarsToDropins(type: Copy) {
+tasks.register('copyJarsToDropins', Copy) {
+    dependsOn removeJarsFromDropins
     from(fileTree(dir: '../third-party/build/libs', include: '*.jar'))
     from(fileTree(dir: '../wrims-ide/build/libs', include: '*.jar'))
     from(fileTree(dir: '../dwr-hecdssvue/build/libs', include: '*.jar'))
@@ -43,22 +39,18 @@ task copyJarsToDropins(type: Copy) {
     into("${buildDir}/${wrimsGuiFolder}/dropins")
 }
 
-copyJarsToDropins.dependsOn(removeJarsFromDropins, ':third-party:jar', ':wrims-ide:jar', ':dwr-hecdssvue:jar', ':jdiagram:jar', ':xtext-editor:jar', ':xtext-editor-ui:jar')
-
 //task that copies the src/main/configuration/simpleconfigurator/bundles.info file into
 // build/wrims_gui_x64_${version}/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info
-task copyBundlesInfo(type: Copy) {
+tasks.register('copyBundlesInfo', Copy) {
+    dependsOn copyJarsToDropins
     from("src/main/configuration/simpleconfigurator/bundles.info")
     into("${buildDir}/${wrimsGuiFolder}/configuration/org.eclipse.equinox.simpleconfigurator")
 }
 
-copyBundlesInfo.dependsOn(copyJarsToDropins)
-
 // Task that zips the wrims_gui_x64_${version} folder into a zip file
-task zipWrimsGui(type: Zip) {
+tasks.register('zipWrimsGui', Zip) {
+    dependsOn copyBundlesInfo
     from("${buildDir}/${wrimsGuiFolder}")
     archiveFileName = "${wrimsGuiFolder}.zip"
     destinationDirectory = file("${buildDir}/installer")
 }
-
-zipWrimsGui.dependsOn(copyBundlesInfo)
