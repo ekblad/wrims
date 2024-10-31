@@ -55,6 +55,7 @@ tasks.register('prepareBndFile') {
     def bndFile = file('build/bnd/bnd.bnd')
     outputs.file(bndFile)
     def bndTemplateFile = file('src/main/bnd/bnd.bnd.template')
+    inputs.file(bndTemplateFile)
     def libsDir = file('build/tmp/libs')
     def packageSet = new LinkedHashSet<String>()
     def includeResourceSet = new LinkedHashSet<String>()
