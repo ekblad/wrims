@@ -18,25 +18,51 @@ tasks.register('downloadWrimsGuiInstaller', Download) {
 tasks.register('unzipWrimsGuiTemplate', Copy) {
     dependsOn downloadWrimsGuiInstaller
     from(zipTree(new File(wrimsGuiDownload)))
-    into("${buildDir}/${wrimsGuiFolder}")
+    into("${buildDir}/building")
+}
+
+// Task to find and rename the first subdirectory
+tasks.register('renameFirstSubdirectory') {
+    dependsOn unzipWrimsGuiTemplate
+    doLast {
+        def unzippedDir = file("${buildDir}/building")
+        def subDirs = unzippedDir.listFiles().findAll { it.isDirectory() }
+        if (subDirs.size() == 1) {
+            def oldDir = subDirs[0]
+            def newDir = new File(unzippedDir, wrimsGuiFolder)
+            if (oldDir.renameTo(newDir)) {
+                println "Renamed ${oldDir.name} to ${wrimsGuiFolder}"
+            } else {
+                throw new GradleException("Failed to rename ${oldDir.name} to ${wrimsGuiFolder}")
+            }
+        } else {
+            throw new GradleException("Expected exactly one subdirectory but found ${subDirs.size()}")
+        }
+    }
 }
 
 // Task that removes jars containing "hecdssvue", "jdiagram", or "wrimsv2" from the ${buildDir}/${wrimsGuiFolder}/dropins folder
 tasks.register('removeJarsFromDropins', Delete) {
-    dependsOn unzipWrimsGuiTemplate
-    delete fileTree(dir: "${buildDir}/${wrimsGuiFolder}/dropins", include: ['*hecdssvue*.jar', '*jdiagram*.jar', '*wrimsv2*.jar', '*xtext*.jar'])
+    dependsOn renameFirstSubdirectory
+    delete fileTree(dir: "${buildDir}/building/${wrimsGuiFolder}/dropins", include: ['*hecdssvue*.jar', '*jdiagram*.jar', '*wrimsv2*.jar', '*xtext*.jar'])
+}
+
+// Task that clears the workspace cache
+tasks.register('removeWorkspaceCache', Delete) {
+    dependsOn removeJarsFromDropins
+    delete fileTree(dir: "${buildDir}/building/${wrimsGuiFolder}/workspace", include: ['*'])
 }
 
 // Task to copy JARs to dropins folder
 tasks.register('copyJarsToDropins', Copy) {
-    dependsOn removeJarsFromDropins
-    from(fileTree(dir: '../third-party/build/libs', include: '*.jar'))
-    from(fileTree(dir: '../wrims-ide/build/libs', include: '*.jar'))
-    from(fileTree(dir: '../dwr-hecdssvue/build/libs', include: '*.jar'))
-    from(fileTree(dir: '../jdiagram/build/libs', include: '*.jar'))
-    from(fileTree(dir: '../xtext-editor/build/libs', include: '*.jar'))
-    from(fileTree(dir: '../xtext-editor-ui/build/libs', include: '*.jar'))
-    into("${buildDir}/${wrimsGuiFolder}/dropins")
+    dependsOn removeWorkspaceCache
+    from(project(':third-party').tasks.named('jar').get().archiveFile)
+    from(project(':wrims-ide').tasks.named('jar').get().archiveFile)
+    from(project(':dwr-hecdssvue').tasks.named('jar').get().archiveFile)
+    from(project(':jdiagram').tasks.named('jar').get().archiveFile)
+    from(project(':xtext-editor').tasks.named('jar').get().archiveFile)
+    from(project(':xtext-editor-ui').tasks.named('jar').get().archiveFile)
+    into("${buildDir}/building/${wrimsGuiFolder}/dropins")
 }
 
 //task that copies the src/main/configuration/simpleconfigurator/bundles.info file into
@@ -44,13 +70,13 @@ tasks.register('copyJarsToDropins', Copy) {
 tasks.register('copyBundlesInfo', Copy) {
     dependsOn copyJarsToDropins
     from("src/main/configuration/simpleconfigurator/bundles.info")
-    into("${buildDir}/${wrimsGuiFolder}/configuration/org.eclipse.equinox.simpleconfigurator")
+    into("${buildDir}/building/${wrimsGuiFolder}/configuration/org.eclipse.equinox.simpleconfigurator")
 }
 
 // Task that zips the wrims_gui_x64_${version} folder into a zip file
 tasks.register('zipWrimsGui', Zip) {
     dependsOn copyBundlesInfo
-    from("${buildDir}/${wrimsGuiFolder}")
+    from("${buildDir}/building/${wrimsGuiFolder}")
     archiveFileName = "${wrimsGuiFolder}.zip"
     destinationDirectory = file("${buildDir}/installer")
 }
