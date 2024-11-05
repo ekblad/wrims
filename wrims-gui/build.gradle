@@ -4,6 +4,14 @@ plugins {
     id "de.undercouch.download" version "5.6.0"
 }
 
+configurations{
+    windows_x64
+}
+
+dependencies {
+    windows_x64 "gov.ca.dwr:run-libs:+"
+}
+
 def wrimsGuiFolder = "wrims2_gui_x64_${version}"
 def wrimsGuiDownload = "${buildDir}/download/wrims2_gui_download.zip"
 
@@ -41,16 +49,16 @@ tasks.register('renameFirstSubdirectory') {
     }
 }
 
-// Task that removes jars containing "hecdssvue", "jdiagram", or "wrimsv2" from the ${buildDir}/${wrimsGuiFolder}/dropins folder
-tasks.register('removeJarsFromDropins', Delete) {
+// Remove the dropins folder
+tasks.register('removeDropinsFolder', Delete) {
     dependsOn renameFirstSubdirectory
-    delete fileTree(dir: "${buildDir}/building/${wrimsGuiFolder}/dropins", include: ['*hecdssvue*.jar', '*jdiagram*.jar', '*wrimsv2*.jar', '*xtext*.jar'])
+    delete "${buildDir}/building/${wrimsGuiFolder}/dropins"
 }
 
 // Task that clears the workspace cache
 tasks.register('removeWorkspaceCache', Delete) {
-    dependsOn removeJarsFromDropins
-    delete fileTree(dir: "${buildDir}/building/${wrimsGuiFolder}/workspace", include: ['*'])
+    dependsOn removeDropinsFolder
+    delete "${buildDir}/building/${wrimsGuiFolder}/workspace/.metadata"
 }
 
 // Task to copy JARs to dropins folder
@@ -65,10 +73,44 @@ tasks.register('copyJarsToDropins', Copy) {
     into("${buildDir}/building/${wrimsGuiFolder}/dropins")
 }
 
-//task that copies the src/main/configuration/simpleconfigurator/bundles.info file into
-// build/wrims_gui_x64_${version}/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info
-tasks.register('copyBundlesInfo', Copy) {
+//task to delete all contents of the ${buildDir}/building/${wrimsGuiFolder}/libs folder
+tasks.register('cleanLibFolder', Delete) {
     dependsOn copyJarsToDropins
+    delete "${buildDir}/building/${wrimsGuiFolder}/lib"
+}
+
+//task to download native libraries (dlls)
+tasks.register('getNatives', Sync) { syncTask ->
+    dependsOn cleanLibFolder
+    syncTask.from configurations.windows_x64.collect { zipTree(it) }
+    syncTask.into file("${buildDir}/building/${wrimsGuiFolder}/lib")
+}
+
+// Task to copy JARs to dropins folder
+tasks.register('copyWrimsCoreToLib', Copy) {
+    dependsOn getNatives
+    from(project(':wrims-core').tasks.named('jar').get().archiveFile)
+    into("${buildDir}/building/${wrimsGuiFolder}/lib")
+}
+
+//task to unzip the contents of the third-party jar into a temp folder
+tasks.register('unzipThirdPartyJar', Copy) {
+    dependsOn copyWrimsCoreToLib
+    from(zipTree(project(':third-party').tasks.named('jar').get().archiveFile))
+    into("${buildDir}/third-party")
+}
+
+//task to copy all files from ${buildDir}/third-party/lib_x64 to ${buildDir}/building/${wrimsGuiFolder}/lib
+tasks.register('copyThirdPartyToLib', Copy) {
+    dependsOn unzipThirdPartyJar
+    from("${buildDir}/third-party/lib_x64")
+    from("${buildDir}/third-party/heclib")
+    into("${buildDir}/building/${wrimsGuiFolder}/lib")
+}
+
+//task that copies the src/main/configuration/simpleconfigurator/bundles.info file into
+tasks.register('copyBundlesInfo', Copy) {
+    dependsOn copyThirdPartyToLib
     from("src/main/configuration/simpleconfigurator/bundles.info")
     into("${buildDir}/building/${wrimsGuiFolder}/configuration/org.eclipse.equinox.simpleconfigurator")
 }
