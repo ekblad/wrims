@@ -12,10 +12,6 @@ configurations {
 }
 
 dependencies {
-    //additional dependencies
-    implementation libs.hec.monolith
-    implementation libs.hec.nucleus.metadata
-    implementation libs.dssgui
 
     //module dependencies
     implementation project(':third-party')

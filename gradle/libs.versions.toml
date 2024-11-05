@@ -1,6 +1,7 @@
 [versions]
 hec-monolith = "3.3.22"
 hec-nucleus-metadata = "2.0.1"
+hec-cwms-ratings-core = "2.0.2"
 dssgui = "3.3.33"
 guava = "11.0.2"
 commons-io = "2.1"
@@ -32,6 +33,7 @@ xerces = "2.11.0"
 hec-monolith = { module = "mil.army.usace.hec:hec-monolith", version.ref = "hec-monolith" }
 dssgui = { module = "mil.army.usace.hec:dssgui", version.ref = "dssgui" }
 hec-nucleus-metadata = { module = "mil.army.usace.hec:hec-nucleus-metadata", version.ref = "hec-nucleus-metadata" }
+hec-cwms-ratings-core = { module = "mil.army.usace.hec:hec-cwms-ratings-core", version.ref = "hec-cwms-ratings-core" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
 xstream = { module = "com.thoughtworks.xstream:xstream", version.ref = "xstream" }

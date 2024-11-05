@@ -12,13 +12,6 @@ dependencies {
     implementation project(':wrims-ide')
     implementation project(':dwr-hecdssvue')
 
-    //additional dependencies
-    implementation libs.hec.monolith
-    implementation libs.hec.nucleus.metadata
-    implementation libs.dssgui
-
-    implementation(":JDiagram") //This library is unavailable in Maven Central.
-
     //eclipse libs
     compileOnly fileTree(dir: '../eclipse-luna-libs', include: ['*.jar'])
 }

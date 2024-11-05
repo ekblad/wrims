@@ -8,6 +8,10 @@ plugins{
     id 'biz.aQute.bnd.builder' version '6.4.0'
 }
 
+configurations {
+    hecdll
+}
+
 dependencies {
     api libs.antlr
     api libs.antlr.runtime
@@ -21,8 +25,11 @@ dependencies {
     api libs.jarhdfobj
     api libs.obgenesis
     api libs.slf4jnop
+    api libs.hec.cwms.ratings.core
+    api libs.hec.monolith
+    api libs.hec.nucleus.metadata
+    api libs.dssgui
     api libs.jdom
-    api libs.xerces
 
     //x64 jars
     api(":calsimgui") //This is version 1.1.2 of CALSIM GUI developed by DWR.
@@ -34,16 +41,56 @@ dependencies {
     api(":jnios") //unavialable in maven central
     api(":jpy") //matching jar unavilable in maven central
     api(":jpython") //matching jar unavilable in maven central
-    api(":misc-1.1") //custom collection of miscellenious packages. Developed by DWR.
-    api(":parser") //custom collection of parser packages. Developed by DWR.
+    api(":misc-1.2") //custom collection of miscellenious packages. Developed by DWR.
     api(":sqljdbc4-2.0") //matching jar unavilable in maven central. Newer version available
     api(":swixml") //local jar contains additional classes compared to 1.5.144 jar on maven central
     api(":vista") //developed by DWR. Unavailable on maven central
-    api(":xml") //custom collection of sun xml package
+    api(":JDiagram") //custom collection of JDiagram packages. Developed by DWR.
 
     //dlls
     api fileTree(dir: 'libs/win-x64', include: ['cb.dll'])
     api fileTree(dir: 'libs/win-x64', include: ['jep.dll'])
+
+    hecdll('mil.army.usace.hec:javaHeclib:7-IS-2-win-x86_64@zip')
+}
+
+configurations.all {
+    exclude group: "org.xml.sax", module: "sax"
+    exclude group: "xml-apis", module: "xml-apis"
+    exclude group: "mil.army.usace.hec", module: "hec-db-core"
+    exclude group: "mil.army.usace.hec", module: "hec-isocline-paint"
+    exclude group: "mil.army.usace.hec", module: "hec-isocline-g2d-plot"
+    exclude group: "mil.army.usace.hec", module: "service-annotations"
+    exclude group: "mil.army.usace.hec", module: "callback-services"
+    exclude group: "mil.army.usace.hec", module: "hec-server-suite"
+    exclude group: "mil.army.usace.hec", module: "hec-server-suite-ui"
+    exclude group: "mil.army.usace.hec", module: "radar-server-suite"
+    exclude group: "mil.army.usace.hec", module: "vrt"
+    exclude group: "mil.army.usace.hec.swingx", module: "swingx-core"
+    exclude group: "javax.xml.bind", module: "jaxb-api"
+    exclude group: "com.sun.xml.bind", module: "jaxb-impl"
+    exclude group: "com.sun.xml.bind", module: "jaxb-core"
+    exclude group: "org.bouncycastle", module: "bcprov-jdk15on"
+    exclude group: "org.bouncycastle", module: "bcpkix-jdk15on"
+    exclude group: "com.mrsid", module: "mrsidreader"
+    exclude group: "org.jfree", module: "jfreechart"
+    exclude group: "org.jfree", module: "jcommon"
+    exclude group: "org.apache.poi", module: "poi"
+    exclude group: "org.apache.poi", module: "poi-ooxml"
+    exclude group: "org.apache.poi", module: "poi-ooxml-schemas"
+    exclude group: "com.oracle.database.jdbc", module: "jmscommon"
+    exclude group: "org.apache.xmlbeans", module: "xmlbeans"
+    exclude group: "dom4j", module: "dom4j"
+    exclude group: "javax.media", module: "jai_core"
+    exclude group: "javax.media", module: "jai_codec"
+    exclude group: "com.sun.media", module: "jai_imageio"
+    exclude group: "net.java.dev.jna", module: "jna"
+    exclude group: "com.fifesoft", module: "rstaui"
+    exclude group: "org.python", module: "jython-standalone"
+    exclude group: "org.osgi", module: "org.osgi.compendium"
+    exclude group: "org.osgi", module: "org.osgi.core"
+    exclude group: "org.xml.sax", module: "sax"
+    exclude group: "xml-apis", module: "xml-apis"
 }
 
 tasks.register('copyDependencies', Copy) {
@@ -52,8 +99,16 @@ tasks.register('copyDependencies', Copy) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
+tasks.register('copyHeclib', Sync) { syncTask ->
+    from {
+        configurations.hecdll.collect { zipTree(it) }
+    }
+    into file("build/tmp/dll/heclib")
+}
+
 tasks.register('prepareBndFile') {
     dependsOn(tasks.named("copyDependencies"))
+    dependsOn(tasks.named("copyHeclib"))
 
     def bndFile = file('build/bnd/bnd.bnd')
     outputs.file(bndFile)
@@ -93,7 +148,7 @@ tasks.register('prepareBndFile') {
                 jar.entries().each { entry ->
                     if (entry.name.endsWith('.class')) {
                         def packageName = entry.name.replaceAll('/[^/]+$', '').replace('/', '.')
-                        if (!packageName.startsWith('Lib.') && !packageName.startsWith('org.osgi') && !packageName.startsWith('org.slf4j') && !packageName.startsWith('org.w3c.dom') && !packageName.startsWith('org.xml.sax') && !packageName.startsWith('javax.xml')) {
+                        if (!packageName.startsWith('Lib.') && !packageName.startsWith('org.osgi') && !packageName.startsWith('org.slf4j') && !packageName.startsWith('org.w3c.dom') && !packageName.startsWith('javax.xml') && !packageName.startsWith('org.apache.commons.logging' ) && !packageName.startsWith('javax.annotation') && !packageName.startsWith('org.apache') && !packageName.startsWith('org.jdom') && !packageName.startsWith('org.xml')) {
                             packageSet.add(packageName)
                         }
                     }
@@ -105,6 +160,7 @@ tasks.register('prepareBndFile') {
         def includeResourceContents = includeResourceSet.collect { it + ',\\' }.join('\n    ')
         includeResourceContents += "icons = icons,\\\n" +
                 "    lib_x64/jep.dll=libs/win-x64/jep.dll,\\\n" +
+                "    heclib=build/tmp/dll/heclib,\\\n" +
                 "    lib_x64/cb.dll=libs/win-x64/cb.dll"
         bndFile.append("\n-includeresource: \\\n    ${includeResourceContents}\n")
         logger.debug("Added Include-Resource contents to bnd.bnd.")
