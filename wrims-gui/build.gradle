@@ -122,9 +122,21 @@ tasks.register('copyBundlesInfo', Copy) {
     }
 }
 
+//task that runs the bat file in build/download/${WRIMS_GUI_FOLDER/WRIMS2_GUI_Start.bat
+tasks.register('runWrimsGui') {
+    dependsOn copyBundlesInfo
+    doLast {
+        def processBuilder = new ProcessBuilder('cmd', '/c', 'WRIMS2_GUI_Start.bat')
+        processBuilder.directory(new File("${buildDir}/installer/${wrimsGuiFolder}"))
+        def process = processBuilder.start()
+        Thread.sleep(60000)
+        def taskkill = new ProcessBuilder('cmd', '/c', 'taskkill', '/IM', 'WRIMS2_GUI_x64.exe', '/F').start()
+    }
+}
+
 // Task that zips the wrims_gui_x64_${version} folder into a zip file
 tasks.register('zipWrimsGui', Zip) {
-    dependsOn copyBundlesInfo
+    dependsOn runWrimsGui
     from("${buildDir}/installer/${wrimsGuiFolder}")
     archiveFileName = "${wrimsGuiFolder}.zip"
     destinationDirectory = file("${buildDir}/installer")
