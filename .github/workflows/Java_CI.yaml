@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - Feature/wrims-devops
-      - Feature/wrims-installer-devops
 
 jobs:
   build:
