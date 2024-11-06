@@ -17,8 +17,10 @@ import wrimsv2.wreslplus.elements.procedures.ProcIfIncItemGroup;
 import wrimsv2.wreslplus.elements.procedures.ProcIncFile;
 import wrimsv2.wreslplus.elements.procedures.ProcVarIncFileList;
 import wrimsv2.wreslplus.elements.procedures.ToLowerCase;
-import wrimsv2.wreslplus.grammar.WreslPlusLexer;
-import wrimsv2.wreslplus.grammar.WreslPlusParser;
+// import wrimsv2.wreslplus.grammar.WreslPlusLexer;
+// import wrimsv2.wreslplus.grammar.WreslPlusParser;
+import wrimsv2.wreslparser.grammar.WreslPlusLexer;
+import wrimsv2.wreslparser.grammar.WreslPlusParser;
 
 public class ParserUtils {
 	
