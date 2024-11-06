@@ -379,6 +379,7 @@ public class ControllerBatch {
 						if (ILP.loggingUsageMemeory) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");		
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
 							if (enableConfigProgress) {
@@ -418,6 +419,7 @@ public class ControllerBatch {
 							}
 						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -765,6 +767,7 @@ public class ControllerBatch {
 						if (ILP.loggingUsageMemeory) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
 							if (enableConfigProgress) {
@@ -807,6 +810,7 @@ public class ControllerBatch {
 							}
 						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -995,6 +999,7 @@ public class ControllerBatch {
 						if (ILP.loggingUsageMemeory) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
 							if (enableConfigProgress) {
@@ -1034,6 +1039,7 @@ public class ControllerBatch {
 							}
 						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -1273,6 +1279,7 @@ public class ControllerBatch {
 						if (ILP.loggingUsageMemeory) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						if (Error.error_evaluation.size()>=1) noError=false;
 
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -1291,6 +1298,7 @@ public class ControllerBatch {
 							}
 						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -1423,6 +1431,7 @@ public class ControllerBatch {
 						if (ILP.loggingUsageMemeory) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
 							if (enableConfigProgress) {
@@ -1462,6 +1471,7 @@ public class ControllerBatch {
 							}
 						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -1646,6 +1656,7 @@ public class ControllerBatch {
 						if (ILP.loggingUsageMemeory) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
 							if (enableConfigProgress) {
@@ -1698,6 +1709,7 @@ public class ControllerBatch {
 							}
 						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
+						System.out.println("Solve "+(i+1)+" SU "+ControlData.solve_unified_count+" S1 "+ControlData.solve_1_count+" S2 "+ControlData.solve_2_count+" S3 "+ControlData.solve_3_count+" SC "+ControlData.solve_Cbc_count+" SH "+ControlData.solve_whs_count);
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){

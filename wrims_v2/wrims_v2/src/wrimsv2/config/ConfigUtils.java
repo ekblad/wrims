@@ -474,7 +474,9 @@ public class ConfigUtils {
 			String s = configMap.get(k);
 
 			if (s.equalsIgnoreCase("solveu")){
-				CbcSolver.solvFunc=CbcSolver.solvU;	
+				CbcSolver.solvFunc=CbcSolver.solvU;
+			} else if (s.equalsIgnoreCase("solve1")){
+				CbcSolver.solvFunc=CbcSolver.solv1;	
 			} else if (s.equalsIgnoreCase("solve2")){
 				CbcSolver.solvFunc=CbcSolver.solv2;	
 			} else if (s.equalsIgnoreCase("solve3")){

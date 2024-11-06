@@ -75,6 +75,7 @@ public class CbcSolver {
 	
 	private static  double maxValue = 1e28; //Double.POSITIVE_INFINITY;
 	//public static final double zeroTolerence =  1e-10;
+	public static double solve_1_primalT =  1e-9;        // can read from config cbcTolerancePrimal
 	public static double solve_2_primalT =  1e-9;        // can read from config cbcTolerancePrimal
 	public static double solve_2_primalT_relax =  1e-7;  // can read from config cbcTolerancePrimalRelax
 	//public static final double solve_2_primalT_relax_most =  1e-4;
@@ -154,7 +155,7 @@ public class CbcSolver {
 	public static int solvFunc = 90; // default 
 	public static int warm_2nd_solvFunc = 20; // default 
 	
-	//public static final int solv0 =  0;
+	public static final int solv1 = 10;
 	public static final int solv2 = 20;
 	public static final int solv3 = 30;
 	public static final int solvCallCbc = 50;
@@ -1145,7 +1146,14 @@ public class CbcSolver {
 				solveName=solve_u_ret.get(ret);
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);
-			
+			} else if (solvFunc == solv1){
+				solveName="1__";
+				jCbc.setPrimalTolerance(model, solve_1_primalT);
+				jCbc.setIntegerTolerance(model, integerT);
+				jCbc.solve_1(model, solver, 0);
+				ControlData.solve_1_count += 1;
+				status = jCbc.status(model);
+				status2 = jCbc.secondaryStatus(model);
 			} else if (solvFunc == solv2){
 				solveName="2__";
 				jCbc.setPrimalTolerance(model, solve_2_primalT);
@@ -2154,7 +2162,14 @@ int pp=0;
 		ILP.writeNoteLn(jCbc.getModelName(solver), msg);
 		System.out.println(jCbc.getModelName(solver)+ msg);
 	}
-	
+
+	private static void solve_1() {
+		solveName="1__";
+		jCbc.setPrimalTolerance(model, solve_1_primalT);
+		jCbc.setIntegerTolerance(model, integerT);
+		jCbc.solve_1(model, solver, 0);
+	}
+
 	private static int solve_2() {
 		int r = -99;
 		r = solve_2(solve_2_primalT, "2__");

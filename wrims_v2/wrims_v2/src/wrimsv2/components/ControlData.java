@@ -213,6 +213,7 @@ public class ControlData {
 	public static int n_annec_matchdsm2=0;
 
 	public static int solve_unified_count=0;
+	public static int solve_1_count=0;
 	public static int solve_2_count=0;
 	public static int solve_3_count=0;
 	public static int solve_Cbc_count=0;
