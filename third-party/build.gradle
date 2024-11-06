@@ -167,6 +167,10 @@ tasks.register('prepareBndFile') {
             }
         }
 
+        //Explicitly adding the org.apache.commons.io package to the export package list that is required by wrims-ide
+        //all other org.apache packages are still excluded
+        packageSet.add("org.apache.commons.io")
+
         // Add Include-Resource contents to the end of bnd.bnd
         def includeResourceContents = includeResourceSet.collect { it + ',\\' }.join('\n    ')
         includeResourceContents += "icons = icons,\\\n" +
