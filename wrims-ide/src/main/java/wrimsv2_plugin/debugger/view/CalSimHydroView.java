@@ -156,7 +156,18 @@ public class CalSimHydroView extends ViewPart implements ISelectionListener{
 
 	@Override
 	public void setFocus() {
-		getSite().getPart().setFocus();
+		// TODO: DWR Review Change
+		//This was causing runtime exceptions on load.
+		//Tracking under github issue: https://github.com/CentralValleyModeling/wrims/issues/154
+		//getSite().getPart().setFocus();
+		try
+		{
+			area.setFocus();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 }
