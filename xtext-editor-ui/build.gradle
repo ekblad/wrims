@@ -18,20 +18,8 @@ sourceSets {
 dependencies {
     //module dependencies
     implementation project(':wrims-ide')
+    implementation project(':third-party')
     implementation project(':xtext-editor')
-
-    //additional dependencies
-//    implementation libs.hec.monolith
-//    implementation libs.hec.nucleus.metadata
-//    implementation libs.dssgui
-    implementation libs.guice
-
-    implementation 'commons-cli:commons-cli:1.4'
-    implementation 'log4j:log4j:1.2.17'
-    implementation 'com.ibm.icu:icu4j:71.1'
-
-    implementation(":antlr-generator-3.2.0")
-    implementation(":antlr-runtime-3.2")
 
     //eclipse libs
     compileOnly fileTree(dir: '../eclipse-luna-libs', include: ['*.jar'])

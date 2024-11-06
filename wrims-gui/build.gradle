@@ -12,7 +12,7 @@ dependencies {
     windows_x64 "gov.ca.dwr:run-libs:+"
 }
 
-def wrimsGuiFolder = "wrims2_gui_x64_${version}"
+def wrimsGuiFolder = "wrims2_gui_x64"
 def wrimsGuiDownload = "${buildDir}/download/wrims2_gui_download.zip"
 
 //download the latest WRIMS GUI installer from DWR
@@ -26,14 +26,14 @@ tasks.register('downloadWrimsGuiInstaller', Download) {
 tasks.register('unzipWrimsGuiTemplate', Copy) {
     dependsOn downloadWrimsGuiInstaller
     from(zipTree(new File(wrimsGuiDownload)))
-    into("${buildDir}/building")
+    into("${buildDir}/installer/installer")
 }
 
 // Task to find and rename the first subdirectory
 tasks.register('renameFirstSubdirectory') {
     dependsOn unzipWrimsGuiTemplate
     doLast {
-        def unzippedDir = file("${buildDir}/building")
+        def unzippedDir = file("${buildDir}/installer")
         def subDirs = unzippedDir.listFiles().findAll { it.isDirectory() }
         if (subDirs.size() == 1) {
             def oldDir = subDirs[0]
@@ -52,13 +52,13 @@ tasks.register('renameFirstSubdirectory') {
 // Remove the dropins folder
 tasks.register('removeDropinsFolder', Delete) {
     dependsOn renameFirstSubdirectory
-    delete "${buildDir}/building/${wrimsGuiFolder}/dropins"
+    delete "${buildDir}/installer/${wrimsGuiFolder}/dropins"
 }
 
 // Task that clears the workspace cache
 tasks.register('removeWorkspaceCache', Delete) {
     dependsOn removeDropinsFolder
-    delete "${buildDir}/building/${wrimsGuiFolder}/workspace/.metadata"
+    delete "${buildDir}/installer/${wrimsGuiFolder}/workspace/.metadata"
 }
 
 // Task to copy JARs to dropins folder
@@ -70,27 +70,27 @@ tasks.register('copyJarsToDropins', Copy) {
     from(project(':jdiagram').tasks.named('jar').get().archiveFile)
     from(project(':xtext-editor').tasks.named('jar').get().archiveFile)
     from(project(':xtext-editor-ui').tasks.named('jar').get().archiveFile)
-    into("${buildDir}/building/${wrimsGuiFolder}/dropins")
+    into("${buildDir}/installer/${wrimsGuiFolder}/dropins")
 }
 
-//task to delete all contents of the ${buildDir}/building/${wrimsGuiFolder}/libs folder
+//task to delete all contents of the ${buildDir}/installer/${wrimsGuiFolder}/libs folder
 tasks.register('cleanLibFolder', Delete) {
     dependsOn copyJarsToDropins
-    delete "${buildDir}/building/${wrimsGuiFolder}/lib"
+    delete "${buildDir}/installer/${wrimsGuiFolder}/lib"
 }
 
 //task to download native libraries (dlls)
 tasks.register('getNatives', Sync) { syncTask ->
     dependsOn cleanLibFolder
     syncTask.from configurations.windows_x64.collect { zipTree(it) }
-    syncTask.into file("${buildDir}/building/${wrimsGuiFolder}/lib")
+    syncTask.into file("${buildDir}/installer/${wrimsGuiFolder}/lib")
 }
 
 // Task to copy JARs to dropins folder
 tasks.register('copyWrimsCoreToLib', Copy) {
     dependsOn getNatives
     from(project(':wrims-core').tasks.named('jar').get().archiveFile)
-    into("${buildDir}/building/${wrimsGuiFolder}/lib")
+    into("${buildDir}/installer/${wrimsGuiFolder}/lib")
 }
 
 //task to unzip the contents of the third-party jar into a temp folder
@@ -100,25 +100,29 @@ tasks.register('unzipThirdPartyJar', Copy) {
     into("${buildDir}/third-party")
 }
 
-//task to copy all files from ${buildDir}/third-party/lib_x64 to ${buildDir}/building/${wrimsGuiFolder}/lib
+//task to copy all files from ${buildDir}/third-party/lib_x64 to ${buildDir}/installer/${wrimsGuiFolder}/lib
 tasks.register('copyThirdPartyToLib', Copy) {
     dependsOn unzipThirdPartyJar
     from("${buildDir}/third-party/lib_x64")
     from("${buildDir}/third-party/heclib")
-    into("${buildDir}/building/${wrimsGuiFolder}/lib")
+    into("${buildDir}/installer/${wrimsGuiFolder}/lib")
 }
 
 //task that copies the src/main/configuration/simpleconfigurator/bundles.info file into
+//bundles.info file contains the file mappings for the dropins jars.
 tasks.register('copyBundlesInfo', Copy) {
     dependsOn copyThirdPartyToLib
     from("src/main/configuration/simpleconfigurator/bundles.info")
-    into("${buildDir}/building/${wrimsGuiFolder}/configuration/org.eclipse.equinox.simpleconfigurator")
+    into("${buildDir}/installer/${wrimsGuiFolder}/configuration/org.eclipse.equinox.simpleconfigurator")
+    filter { line ->
+        line.replace('${WRIMS_VERSION}', version)
+    }
 }
 
 // Task that zips the wrims_gui_x64_${version} folder into a zip file
 tasks.register('zipWrimsGui', Zip) {
     dependsOn copyBundlesInfo
-    from("${buildDir}/building/${wrimsGuiFolder}")
+    from("${buildDir}/installer/${wrimsGuiFolder}")
     archiveFileName = "${wrimsGuiFolder}.zip"
     destinationDirectory = file("${buildDir}/installer")
 }

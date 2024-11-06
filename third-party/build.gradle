@@ -1,6 +1,6 @@
 import java.util.jar.JarFile
 
-plugins{
+plugins {
     id 'library.deps-conventions'
     id 'library.java-conventions'
 
@@ -31,8 +31,13 @@ dependencies {
     api libs.dssgui
     api libs.jdom
     api libs.kryo
+    api libs.guice
+    api libs.commons.cli
+    api libs.log4j
+    api libs.icu4j
 
     //x64 jars
+    api(":antlr-generator-3.2.0")
     api(":calsimgui") //This is version 1.1.2 of CALSIM GUI developed by DWR.
     api(":coinor") //coinor solver jar, unavailable in maven central
     api(":com.google.ortools.linearsolver") //linear solver jar, unavailable in maven central
@@ -48,10 +53,7 @@ dependencies {
     api(":vista") //developed by DWR. Unavailable on maven central
     api(":JDiagram") //custom collection of JDiagram packages. Developed by DWR.
 
-    //dlls
-    api fileTree(dir: 'libs/win-x64', include: ['cb.dll'])
-    api fileTree(dir: 'libs/win-x64', include: ['jep.dll'])
-
+    //additional dependencies
     hecdll('mil.army.usace.hec:javaHeclib:7-IS-2-win-x86_64@zip')
 }
 
@@ -122,7 +124,7 @@ tasks.register('prepareBndFile') {
     doFirst {
         logger.debug("Running prepareBndFile task...")
 
-        if(!bndFile.parentFile.exists()) {
+        if (!bndFile.parentFile.exists()) {
             bndFile.parentFile.mkdirs();
         }
 
@@ -130,8 +132,7 @@ tasks.register('prepareBndFile') {
         if (bndFile.exists()) {
             bndFile.delete()
             logger.debug("Deleted existing bnd.bnd file.")
-        }
-        else {
+        } else {
             // Create the bnd.bnd file if it does not exist
             logger.debug("Creating empty bnd.bnd file.")
             bndFile.createNewFile()
@@ -149,7 +150,17 @@ tasks.register('prepareBndFile') {
                 jar.entries().each { entry ->
                     if (entry.name.endsWith('.class')) {
                         def packageName = entry.name.replaceAll('/[^/]+$', '').replace('/', '.')
-                        if (!packageName.startsWith('Lib.') && !packageName.startsWith('org.osgi') && !packageName.startsWith('org.slf4j') && !packageName.startsWith('org.w3c.dom') && !packageName.startsWith('javax.xml') && !packageName.startsWith('org.apache.commons.logging' ) && !packageName.startsWith('javax.annotation') && !packageName.startsWith('org.apache') && !packageName.startsWith('org.jdom') && !packageName.startsWith('org.xml')) {
+                        // Excluding libs conflicting with packages provided by eclipse jars.
+                        if (!packageName.startsWith('Lib.') &&
+                                !packageName.startsWith('org.osgi') &&
+                                !packageName.startsWith('org.slf4j') &&
+                                !packageName.startsWith('org.w3c.dom') &&
+                                !packageName.startsWith('javax.xml') &&
+                                !packageName.startsWith('org.apache.commons.logging') &&
+                                !packageName.startsWith('javax.annotation') &&
+                                !packageName.startsWith('org.apache') &&
+                                !packageName.startsWith('org.jdom') &&
+                                !packageName.startsWith('org.xml')) {
                             packageSet.add(packageName)
                         }
                     }

@@ -16,14 +16,6 @@ configurations{
 }
 repositories{
     maven {
-        name = "GitHubPackages-WRIMS"
-        url = uri("https://maven.pkg.github.com/CentralValleyModeling/wrims")
-        credentials {
-            username = project.findProperty('cvmUserId') ?: System.getenv('PKG_USERNAME')
-            password = project.findProperty('cvmPassword') ?: System.getenv('PKG_TOKEN')
-        }
-    }
-    maven {
         name = "GitHubPackages-ReportTool"
         url = uri("https://maven.pkg.github.com/CentralValleyModeling/system-summary-report-tool")
         credentials {
