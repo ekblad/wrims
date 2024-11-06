@@ -15,6 +15,17 @@ repositories {
         url 'https://cogcomp.seas.upenn.edu/m2repo/'
     }
 
+    //provider for the wrims-gui-template
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/CentralValleyModeling/wrims")
+        credentials {
+            username = project.findProperty('cvmUserId') ?: System.getenv('PKG_USERNAME')
+            password = project.findProperty('cvmPassword') ?: System.getenv('PKG_TOKEN')
+        }
+
+    }
+
     // Use Maven Central for resolving dependencies.
     // The primary public Maven repository, Maven Central where most 3rd party dependencies can be found
     mavenCentral()

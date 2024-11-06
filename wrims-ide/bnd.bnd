@@ -16,7 +16,6 @@ Require-Bundle: \
     org.eclipse.ui.views.properties.tabbed,\
     org.eclipse.draw2d,\
     org.eclipse.datatools.connectivity,\
-    hec-dependencies;bundle-version="1.0.0",\
     third-party;bundle-version="1.0.0"
 
 Import-Package: \
