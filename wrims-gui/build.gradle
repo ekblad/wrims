@@ -12,7 +12,10 @@ dependencies {
     windows_x64 "gov.ca.dwr:run-libs:+"
 }
 
-def wrimsGuiFolder = "wrims2_gui_x64"
+def date = new Date()
+def formattedDate = date.format('yyyyMMdd')
+
+def wrimsGuiFolder = "wrims2_gui_x64_${formattedDate}"
 def wrimsGuiDownload = "${buildDir}/download/wrims2_gui_download.zip"
 
 //download the latest WRIMS GUI installer from DWR
@@ -26,7 +29,7 @@ tasks.register('downloadWrimsGuiInstaller', Download) {
 tasks.register('unzipWrimsGuiTemplate', Copy) {
     dependsOn downloadWrimsGuiInstaller
     from(zipTree(new File(wrimsGuiDownload)))
-    into("${buildDir}/installer/installer")
+    into("${buildDir}/installer")
 }
 
 // Task to find and rename the first subdirectory

@@ -156,7 +156,6 @@ tasks.register('prepareBndFile') {
                                 !packageName.startsWith('org.slf4j') &&
                                 !packageName.startsWith('org.w3c.dom') &&
                                 !packageName.startsWith('javax.xml') &&
-                                !packageName.startsWith('org.apache.commons.logging') &&
                                 !packageName.startsWith('javax.annotation') &&
                                 !packageName.startsWith('org.apache') &&
                                 !packageName.startsWith('org.jdom') &&
