@@ -170,7 +170,7 @@ public class ParserUtils {
 
 	public static void setRunDir(String runDir){
 		
-		GlobalData.runDir = Tools.getCanonicalLowCasePath(runDir);;
+		GlobalData.runDir = Tools.getCanonicalLowCasePath(runDir);
 	}
 
 
