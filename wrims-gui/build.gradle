@@ -122,7 +122,11 @@ tasks.register('copyBundlesInfo', Copy) {
     }
 }
 
-//task that runs the bat file in build/download/${WRIMS_GUI_FOLDER/WRIMS2_GUI_Start.bat
+/**
+ * Running the WRIMS2_GUI_Start.bat file will launch the WRIMS exe with a -clean argument that
+ * forces an update of some ecplise files and ensures the user can then run the WRIMS GUI
+ * with the updated packages using the WRIMS2GUI_x64.exe file going forward.
+ */
 tasks.register('runWrimsGui') {
     dependsOn copyBundlesInfo
     doLast {
